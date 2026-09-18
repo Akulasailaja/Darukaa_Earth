@@ -1,0 +1,38 @@
+{
+  "name": "darukaa-earth-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
+    "mapbox-gl": "^3.4.0",
+    "@mapbox/mapbox-gl-draw": "^1.4.3",
+    "chart.js": "^4.4.3",
+    "react-chartjs-2": "^5.2.0",
+    "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "vite": "^5.3.1",
+    "@vitejs/plugin-react": "^4.3.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

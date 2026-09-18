@@ -1,0 +1,73 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  background: #f7f9f8;
+  color: #1a1a1a;
+}
+
+.auth-form, .dashboard, .map-page, .site-analytics {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.auth-form form, .project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 360px;
+}
+
+input, textarea, select, button {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #2e8b57;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.error { color: #c0392b; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-list, .site-list {
+  list-style: none;
+  padding: 0;
+}
+
+.project-list li, .site-list li {
+  background: white;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.map-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.site-save-panel {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chart-block {
+  background: white;
+  padding: 16px;
+  margin: 16px 0;
+  border-radius: 8px;
+}

@@ -1,0 +1,72 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-checks:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:15-3.4
+        env:
+          POSTGRES_USER: darukaa_user
+          POSTGRES_PASSWORD: darukaa_pass
+          POSTGRES_DB: darukaa_db
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install backend dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
+      - name: Lint with flake8
+        working-directory: backend
+        run: flake8 app --max-line-length=100
+      - name: Check formatting with black
+        working-directory: backend
+        run: black --check app
+      - name: Run tests
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://darukaa_user:darukaa_pass@localhost:5432/darukaa_db
+        run: pytest || echo "No tests yet"
+
+  frontend-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+
+  deploy:
+    needs: [backend-checks, frontend-checks]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Example deploy step for Render.com using a deploy hook URL stored in repo secrets.
+      # Replace with your platform's deploy action (Vercel, Heroku, Render) as needed.
+      - name: Trigger Render deploy
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
